@@ -14,6 +14,7 @@ class timerClient: public QObject
 
 public:
 	timerClient(QObject *parent=nullptr);
+	~timerClient();
 	void setUpTimer(QLayout *layoutParent, QString label, quint8 h, quint8 m);
 private:
 	QWidget *widget;

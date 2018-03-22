@@ -13,7 +13,7 @@ void timerClient::setUpTimer(QLayout *layoutParent, QString label, quint8 h, qui
 	lvMain->addWidget(lTimerName);
 	hours=h;
 	mins=m;
-	lTimer=new QLabel(QString::number(h)+":"+QString::number(m)+":00");
+	lTimer=new QLabel((h>9?QString::number(h):"0"+QString::number(h))+":"+(m>9?QString::number(m):"0"+QString::number(m))+":00");
 	lvMain->addWidget(lTimer);
 	pbStartStop=new QPushButton();
 	pbStartStop->setText("Start timer");
@@ -54,7 +54,7 @@ void timerClient::tick()
 		hours=totalSecs/3600;
 		mins=(totalSecs-hours*3600)/60;
 		secs=totalSecs-hours*3600-mins*60;
-		lTimer->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs));
+		lTimer->setText((hours>9 ? QString::number(hours) : "0"+QString::number(hours))+":"+ (mins>9 ? QString::number(mins) : "0"+QString::number(mins))+":"+ (secs>9 ? QString::number(secs) : "0"+QString::number(secs)));
 	}
 	else
 	{
@@ -65,7 +65,17 @@ void timerClient::tick()
 
 void timerClient::on_pbDeleteTimer_clicked()
 {
-	delete(widget);
 	this->deleteLater();
 }
 
+timerClient::~timerClient()
+{
+	delete(timer);
+	delete(pbDeleteTimer);
+	delete(pbStartStop);
+	delete(lhButtons);
+	delete(lTimer);
+	delete(lTimerName);
+	delete(lvMain);
+	delete(widget);
+}
