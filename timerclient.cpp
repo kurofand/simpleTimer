@@ -55,10 +55,18 @@ void timerClient::tick()
 		mins=(totalSecs-hours*3600)/60;
 		secs=totalSecs-hours*3600-mins*60;
 		lTimer->setText((hours>9 ? QString::number(hours) : "0"+QString::number(hours))+":"+ (mins>9 ? QString::number(mins) : "0"+QString::number(mins))+":"+ (secs>9 ? QString::number(secs) : "0"+QString::number(secs)));
+		if(totalSecs==10)
+		{
+			endTimer=new QTimer();
+			connect(endTimer, SIGNAL(timeout()), this, SLOT(ending()));
+			endTimer->start(1000);
+		}
 	}
 	else
 	{
 		timer->stop();
+		endTimer->stop();
+		delete(endTimer);
 		lTimer->setText("Time is over!");
 	}
 }
@@ -66,6 +74,11 @@ void timerClient::tick()
 void timerClient::on_pbDeleteTimer_clicked()
 {
 	this->deleteLater();
+}
+
+void timerClient::ending()
+{
+	QApplication::beep();
 }
 
 timerClient::~timerClient()

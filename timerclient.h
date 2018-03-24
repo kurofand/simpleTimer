@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QLabel>
+#include <QApplication>
 
 class timerClient: public QObject
 {
@@ -18,7 +19,7 @@ public:
 	void setUpTimer(QLayout *layoutParent, QString label, quint8 h, quint8 m);
 private:
 	QWidget *widget;
-	QTimer *timer;
+	QTimer *timer, *endTimer;
 	QVBoxLayout *lvMain;
 	QHBoxLayout *lhButtons;
 	QPushButton *pbStartStop, *pbDeleteTimer;
@@ -30,6 +31,7 @@ private slots:
 	void on_pbStartStop_clicked();
 	void on_pbDeleteTimer_clicked();
 	void tick();
+	void ending();
 
 };
 
